@@ -1,5 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
+import pymongo
+
+conn = 'mongodb://localhost:27017'
+client = pymongo.MongoClient(conn)
+db = client.mars
+mars_collection = db.mars_collection
 
 
 def get_data():
@@ -41,8 +47,7 @@ def get_data():
             "footer": description.text,
             "img_url": img_url
         })
-
-    return {
+    mars_data = {
         "title": title,
         "content": content,
         "featured_image_url": featured_image_url,
@@ -50,4 +55,15 @@ def get_data():
         "mars_facts": mars_facts,
         "image_data": image_data,
     }
+    existing = mars_collection.find_one()
+    if existing:
+        print(mars_data)
+        mars_data['_id'] = existing['_id']
+        mars_collection.save(mars_data)
+    else:
+        mars_collection.save(mars_data)
+    return mars_data
 
+
+def get_from_db():
+    return mars_collection.find_one()
