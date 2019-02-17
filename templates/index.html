@@ -17,15 +17,13 @@
               height: 200px;
 
         }
-        .holder {
-        display: inline;
-        }
         .holder img {
-        max-height: 400px;
-        max-width: 400px;
-        object-fit: cover;
+            max-height: 400px;
+            max-width: 400px;
+            object-fit: cover;
         }
-        .footer{
+        .weather{
+            border: 1px lightgrey #ddd;
         }
 
     </style>
@@ -58,7 +56,9 @@
             <div class="row">
                 <div class="col-sm-12">
                     <h4>Current Weather on Mars</h4>
-                    {{data["latest_weather"]}}
+                    <div style="border:1px solid black;">
+                        <p style="margin-left:10px;">{{data["latest_weather"]}}</p>
+                    </div>
                 </div>
             </div>
             <div class="row">
