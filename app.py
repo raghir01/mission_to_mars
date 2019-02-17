@@ -11,6 +11,9 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     data = get_from_db()
+    if not data:
+        return redirect('/scrape')
+
     return render_template("index.html", text="Mission to Mars", data=data)
 
 

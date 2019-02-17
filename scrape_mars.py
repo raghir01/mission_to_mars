@@ -57,7 +57,6 @@ def get_data():
     }
     existing = mars_collection.find_one()
     if existing:
-        print(mars_data)
         mars_data['_id'] = existing['_id']
         mars_collection.save(mars_data)
     else:
