@@ -11,7 +11,6 @@ mars_collection = db.mars_collection
 def get_data():
     url = "https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C1\
     65%2C184%2C204&blank_scope=Latest"
-
     s = BeautifulSoup(requests.get(url).text, features="html.parser")
     title = s.find_all('div', class_='content_title')[0].text
     content = s.find_all('div', class_='rollover_description_inner')[0].text
@@ -24,7 +23,8 @@ def get_data():
     url = 'https://twitter.com/marswxreport?lang=en'
     soup = BeautifulSoup(requests.get(url).text, 'html.parser')
     weather_data = soup.findAll('p',class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text')
-    latest_weather = weather_data[0].text
+    weather_data = filter(lambda x: x.text.find('Sol') != -1, weather_data)
+    latest_weather = list(weather_data)[0].text.split('pic')[0]
 
     url = 'https://space-facts.com/mars/'
     soup = BeautifulSoup(requests.get(url).text, 'html.parser')
@@ -47,6 +47,7 @@ def get_data():
             "footer": description.text,
             "img_url": img_url
         })
+
     mars_data = {
         "title": title,
         "content": content,
