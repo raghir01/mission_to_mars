@@ -15,7 +15,6 @@ def get_data():
     url = "https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C1\
     65%2C184%2C204&blank_scope=Latest"
     browser.visit(url)
-    # s = BeautifulSoup(requests.get(url).text, features="html.parser")
     s = BeautifulSoup(browser.html, features="html.parser")
     title = s.find_all('div', class_='content_title')[0].text
     content = s.find_all('div', class_='rollover_description_inner')[0].text
